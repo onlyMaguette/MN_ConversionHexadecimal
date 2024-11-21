@@ -41,18 +41,18 @@ namespace MN_Lab1_Jeu
                         if (choix == nombreATrouver)
                         {
                             gagne = true;
-                            Console.WriteLine("\n🎉 Félicitations, vous avez trouvé le nombre mystère !");
+                            Console.WriteLine("\nFélicitations, vous avez trouvé le nombre mystère !");
                         }
                         else
                         {
-                            Console.WriteLine("❌ Mauvais choix, essayez encore !");
+                            Console.WriteLine("Mauvais choix, essayez encore !");
                         }
 
                         Console.WriteLine($"Vos choix précédents : {string.Join(", ", choixJoueur)}");
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine($"Erreur : {e.Message}");
+                        Console.WriteLine($"{e.Message}");
                     }
                 }
 
@@ -61,8 +61,21 @@ namespace MN_Lab1_Jeu
                 Console.WriteLine($"\nVotre note est : {note}");
 
                 // Rejouer ?
-                Console.Write("\nVoulez-vous rejouer ? (oui/non) : ");
-                string reponse = Console.ReadLine().ToLower();
+                string reponse;
+                do
+                {
+                    Console.Write("\nVoulez-vous rejouer ? (oui/non) : ");
+                    reponse = Console.ReadLine().Trim().ToLower();
+
+                    // Vérifier les variantes acceptées
+                    if (string.IsNullOrEmpty(reponse) || (reponse != "oui" && reponse != "o" && reponse != "non" && reponse != "n"))
+                    {
+                        Console.WriteLine("Entrée incorrecte. Veuillez réessayer.");
+                    }
+                }
+                while (string.IsNullOrEmpty(reponse) || (reponse != "oui" && reponse != "o" && reponse != "non" && reponse != "n"));
+
+                // Déterminer si on rejoue
                 rejouer = reponse == "oui" || reponse == "o";
             }
 
