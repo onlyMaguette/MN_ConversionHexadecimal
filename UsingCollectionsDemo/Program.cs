@@ -51,8 +51,17 @@ class Program
     /// <param name="lstEtudiants">Liste des étudiants</param>
     static void AjouterEtudiant(SortedList lstEtudiants)
     {
-        Console.Write("Nom de l'étudiant : ");
-        string nom = Console.ReadLine();
+        string nom;
+
+        do
+        {
+            Console.Write("Nom de l'étudiant : ");
+            nom = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(nom))
+            {
+                Console.WriteLine(" Veuillez entrer un nom.");
+            }
+        } while (string.IsNullOrWhiteSpace(nom));
 
         Console.Write("Note de Contrôle Continu (sur 20) : ");
         double noteCC = LireNote();
