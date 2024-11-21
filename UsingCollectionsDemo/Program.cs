@@ -59,14 +59,14 @@ class Program
             nom = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(nom))
             {
-                Console.WriteLine(" Veuillez entrer un nom.");
+                Console.WriteLine("\nSaisie incorrecte. Veuillez réessayer.");
             }
         } while (string.IsNullOrWhiteSpace(nom));
 
-        Console.Write("Note de Contrôle Continu (sur 20) : ");
+        Console.Write("Note de Contrôle Continu : ");
         double noteCC = LireNote();
 
-        Console.Write("Note de Devoir (sur 20) : ");
+        Console.Write("Note de Devoir : ");
         double noteDevoir = LireNote();
 
         Etudiant etudiant = new Etudiant
@@ -86,8 +86,17 @@ class Program
     /// <param name="lstEtudiants">Liste des étudiants</param>
     static void AfficherUnEtudiant(SortedList lstEtudiants)
     {
-        Console.Write("Entrez le nom de l'étudiant à rechercher : ");
-        string nom = Console.ReadLine();
+
+        string nom;
+        do
+        {
+            Console.Write("Entrez le nom de l'étudiant à rechercher : ");
+            nom = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(nom))
+            {
+                Console.WriteLine("\nSaisie incorrecte. Veuillez réessayer.");
+            }
+        } while (string.IsNullOrWhiteSpace(nom));
 
         if (lstEtudiants.Contains(nom))
         {
