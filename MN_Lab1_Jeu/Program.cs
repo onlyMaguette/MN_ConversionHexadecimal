@@ -7,7 +7,27 @@ namespace MN_Lab1_Jeu
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Bienvenue dans le jeu 'Trouver le nombre' !");
+            Console.Clear();  // Pour nettoyer la console avant d'afficher le message
+            Console.ForegroundColor = ConsoleColor.Cyan; // Changer la couleur du texte
+
+            Console.WriteLine("**********************************************");
+            Console.WriteLine("*                                            *");
+            Console.WriteLine("*        Bienvenue dans le jeu               *");
+            Console.WriteLine("*        'Trouver le nombre' !                *");
+            Console.WriteLine("*                                            *");
+            Console.WriteLine("**********************************************");
+
+            Console.ResetColor(); // Réinitialiser la couleur de texte par défaut
+
+            // Petite pause pour l'effet
+            Console.WriteLine("\nPréparez-vous à jouer...");
+            Thread.Sleep(1000);  // Attendre 1 seconde pour ajouter un effet de suspense
+
+            Console.WriteLine("\nLe but du jeu est simple :");
+            Console.WriteLine("Devinez le nombre mystère entre les bornes.");
+            Console.WriteLine("Bonne chance !");
+            Console.WriteLine();  // Ajouter un espace entre les messages
+
             bool rejouer = true;
 
             while (rejouer)
@@ -41,14 +61,24 @@ namespace MN_Lab1_Jeu
                         if (choix == nombreATrouver)
                         {
                             gagne = true;
-                            Console.WriteLine("\nFélicitations, vous avez trouvé le nombre mystère !");
+                            Console.ForegroundColor = ConsoleColor.Green;  // Changer la couleur en vert pour la victoire
+                            Console.WriteLine("\nFélicitations !");
+                            Console.WriteLine("Vous avez trouvé le nombre mystère !");
+                            Console.WriteLine($"Il était bien {nombreATrouver} !");
+                            Console.ResetColor(); // Réinitialiser la couleur après l'affichage du message
                         }
                         else
                         {
-                            Console.WriteLine("Mauvais choix, essayez encore !");
+                            Console.ForegroundColor = ConsoleColor.Red;  // Changer la couleur en rouge pour l'échec
+                            Console.WriteLine("\nMauvais choix !");
+                            Console.WriteLine("Dommage, essayez encore !");
+                            Console.ResetColor(); // Réinitialiser la couleur après l'affichage du message
                         }
 
+                        Console.WriteLine("\n--------------------");
                         Console.WriteLine($"Vos choix précédents : {string.Join(", ", choixJoueur)}");
+                        Console.WriteLine("--------------------\n");
+
                     }
                     catch (Exception e)
                     {
