@@ -36,15 +36,18 @@
             if (conversions.Count > 0)
             {
                 Console.WriteLine("\nListe des conversions effectuées :");
+                Console.WriteLine(new string('-', 30)); // Ligne de séparation pour l'esthétique
                 foreach (string conversion in conversions)
                 {
-                    Console.WriteLine(conversion);
+                    Console.WriteLine($"{conversion}");  // Utilisation d'un tiret pour marquer chaque conversion
                 }
+                Console.WriteLine(new string('-', 30)); // Ligne de séparation à la fin
             }
             else
             {
                 Console.WriteLine("\nAucune conversion n'a été effectuée.");
             }
+
         }
 
         /// <summary>
