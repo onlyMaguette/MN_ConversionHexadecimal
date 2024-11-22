@@ -47,7 +47,7 @@ class Program
     }
 
     /// <summary>
-    /// Ajoute un étudiant à la collection
+    /// Ajoute un étudiant à la collection si le nom n'existe pas déjà
     /// </summary>
     /// <param name="lstEtudiants">Liste des étudiants</param>
     static void AjouterEtudiant(SortedList lstEtudiants)
@@ -63,15 +63,29 @@ class Program
             if (string.IsNullOrWhiteSpace(nom) || !Regex.IsMatch(nom, @"^[a-zA-Z]+$"))
             {
                 Console.WriteLine("\nLe nom ne doit contenir que des lettres. Veuillez réessayer.");
+                continue;
             }
-        } while (string.IsNullOrWhiteSpace(nom) || !Regex.IsMatch(nom, @"^[a-zA-Z]+$"));
 
+            // Vérification que le nom n'existe pas déjà dans la liste
+            if (lstEtudiants.Contains(nom))
+            {
+                Console.WriteLine("Un étudiant avec ce nom existe déjà. Veuillez entrer un autre nom.");
+                continue;
+            }
+
+            // Si tout est valide, on sort de la boucle
+            break;
+
+        } while (true);
+
+        // Lecture des notes
         Console.Write("Note de Contrôle Continu : ");
         double noteCC = LireNote();
 
         Console.Write("Note de Devoir : ");
         double noteDevoir = LireNote();
 
+        // Création de l'étudiant
         Etudiant etudiant = new Etudiant
         {
             Nom = nom,
@@ -79,9 +93,12 @@ class Program
             NoteDevoir = noteDevoir
         };
 
+        // Ajout de l'étudiant à la liste
         lstEtudiants.Add(nom, etudiant);
         Console.WriteLine("Étudiant ajouté avec succès !");
     }
+
+
 
     /// <summary>
     /// Affiche les détails d'un étudiant spécifique
