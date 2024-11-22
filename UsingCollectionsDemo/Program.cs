@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System;
 using UsageCollections;
+using System.Text.RegularExpressions;
 
 class Program
 {
@@ -15,7 +16,7 @@ class Program
             Console.WriteLine("2. Afficher les détails d'un étudiant");
             Console.WriteLine("3. Afficher tous les étudiants");
             Console.WriteLine("4. Quitter le programme");
-            Console.Write("Votre choix : ");
+            Console.Write("Veuillez sélectionner une option : ");
             string choix = Console.ReadLine().ToLower();
 
             if (choix == "q" || choix == "quitter")
@@ -57,11 +58,13 @@ class Program
         {
             Console.Write("Nom de l'étudiant : ");
             nom = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(nom))
+
+            // Vérification que le nom ne contient que des lettres
+            if (string.IsNullOrWhiteSpace(nom) || !Regex.IsMatch(nom, @"^[a-zA-Z]+$"))
             {
-                Console.WriteLine("\nSaisie incorrecte. Veuillez réessayer.");
+                Console.WriteLine("\nLe nom ne doit contenir que des lettres. Veuillez réessayer.");
             }
-        } while (string.IsNullOrWhiteSpace(nom));
+        } while (string.IsNullOrWhiteSpace(nom) || !Regex.IsMatch(nom, @"^[a-zA-Z]+$"));
 
         Console.Write("Note de Contrôle Continu : ");
         double noteCC = LireNote();
@@ -86,28 +89,37 @@ class Program
     /// <param name="lstEtudiants">Liste des étudiants</param>
     static void AfficherUnEtudiant(SortedList lstEtudiants)
     {
-
         string nom;
+
         do
         {
             Console.Write("Entrez le nom de l'étudiant à rechercher : ");
             nom = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(nom))
+
+            // Vérification que le nom ne contient que des lettres
+            if (string.IsNullOrWhiteSpace(nom) || !Regex.IsMatch(nom, @"^[a-zA-Z]+$"))
             {
-                Console.WriteLine("\nSaisie incorrecte. Veuillez réessayer.");
+                Console.WriteLine("\nLe nom ne doit contenir que des lettres. Veuillez réessayer.");
             }
-        } while (string.IsNullOrWhiteSpace(nom));
+        } while (string.IsNullOrWhiteSpace(nom) || !Regex.IsMatch(nom, @"^[a-zA-Z]+$"));
 
         if (lstEtudiants.Contains(nom))
         {
             Etudiant etudiant = (Etudiant)lstEtudiants[nom];
-            Console.WriteLine(etudiant.ToString());
+            Console.WriteLine("\nDétails de l'étudiant :");
+            Console.WriteLine(new string('-', 30)); // Affichage d'une ligne horizontale
+            Console.WriteLine($"{"Nom",-15}: {etudiant.Nom}");
+            Console.WriteLine($"{"Note CC",-15}: {etudiant.NoteCC:F2}");
+            Console.WriteLine($"{"Note Devoir",-15}: {etudiant.NoteDevoir:F2}");
+            Console.WriteLine($"{"Moyenne",-15}: {etudiant.CalculerMoyenne():F2}");
+            Console.WriteLine(new string('-', 30)); // Affichage d'une ligne horizontale
         }
         else
         {
             Console.WriteLine("Aucun étudiant trouvé avec ce nom.");
         }
     }
+
 
     /// <summary>
     /// Affiche les détails de tous les étudiants
@@ -122,11 +134,17 @@ class Program
         }
 
         Console.WriteLine("\nListe des étudiants :");
+        Console.WriteLine("------------------------------------------------------------");
+        Console.WriteLine("{0,-20} {1,-10} {2,-15} {3,-10}", "Nom", "Note CC", "Note Devoir", "Moyenne");
+        Console.WriteLine("------------------------------------------------------------");
+
         foreach (DictionaryEntry entry in lstEtudiants)
         {
             Etudiant etudiant = (Etudiant)entry.Value;
-            Console.WriteLine(etudiant.ToString());
+            Console.WriteLine("{0,-20} {1,-10:F2} {2,-15:F2} {3,-10:F2}",
+                etudiant.Nom, etudiant.NoteCC, etudiant.NoteDevoir, etudiant.CalculerMoyenne());
         }
+        Console.WriteLine("------------------------------------------------------------");
     }
 
     /// <summary>
